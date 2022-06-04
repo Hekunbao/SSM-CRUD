@@ -24,10 +24,15 @@
         <property name="password" value="${jdbc.password}"/>
     </bean>
 
-    <bean class="org.mybatis.spring.SqlSessionFactoryBean">
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="configLocation" value="classpath:mybatis-config.xml"/>
         <property name="dataSource" ref="pooledDataSource" />
         <property name="mapperLocations" value="classpath:mapper/*.xml"/>
+    </bean>
+    <!--BATCH sqlSession-->
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" >
+        <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <constructor-arg name="executorType" value="BATCH"/>
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
